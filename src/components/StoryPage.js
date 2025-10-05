@@ -1,26 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginPage from './Loginpage';
-import Cover from '../assets/Cover.png'; // Verify this path
+import testData from './test.json'; // Import the JSON file
 import styles from './StoryPage.module.css';
 
 const StoryPage = () => {
   const { user, isAuthenticated, isLoading, logout } = useAuth0();
-  const [selectedComic, setSelectedComic] = useState(null);
   const [currentPage, setCurrentPage] = useState(0); // Start at page 0
   const [isPlaying, setIsPlaying] = useState(false); // Track narration state
+  const [storyData, setStoryData] = useState({
+    page: 1,
+    story: '',
+    dialogues: [],
+    choices: [],
+    history: [],
+    image: ''
+  });
   const soundEffects = ['POW!', 'BAM!', 'WHAM!', 'THWIP!', 'BOOM!', 'ZAP!'];
 
-  const handleComicClick = (comicId) => {
-    console.log('Comic selected:', comicId);
-    setSelectedComic(comicId);
-    setCurrentPage(0); // Reset to first page
-    if (Math.random() > 0.3) createPowEffect(window.innerWidth / 2, window.innerHeight / 2); // 70% chance
-  };
+  useEffect(() => {
+    // Use data from the imported test.json file
+    setStoryData({
+      page: testData.writer.body.page,
+      story: testData.writer.body.story,
+      dialogues: testData.writer.body.dialogues,
+      choices: testData.writer.body.choices,
+      history: testData.writer.body.history,
+      image: `data:image/png;base64,${testData.image.body.data}` // Ensure proper base64 prefix
+    });
+  }, []);
 
-  const handleOptionClick = () => {
-    console.log('Option clicked, advancing to next page');
-    setCurrentPage((prev) => Math.min(prev + 1, 10)); // Limit to 10 pages (0-9 index)
+  const handleOptionClick = (choiceId, label) => {
+    console.log('Option clicked:', label);
+    const choiceData = {
+      history: storyData.history,
+      choice: label
+    };
+    console.log(choiceData); // Log the dictionary to console
+    // For now, simulate staying on the same page; replace with API call to fetch next page later
+    setCurrentPage((prev) => prev + 1); // Advance page for demo
     if (Math.random() > 0.3) createPowEffect(window.innerWidth / 2, window.innerHeight / 2); // 70% chance
   };
 
@@ -34,7 +52,7 @@ const StoryPage = () => {
 
     setIsPlaying(true);
     try {
-      const narrationText = "Dialogue: \"Hero says...\" (from agentic API)"; // Placeholder; replace with API data
+      const narrationText = storyData.story; // Use story as narration text
       const voiceId = "21m00Tcm4TlvDq8ikWAM"; // Replace with your preferred voice ID
       const apiKey = process.env.REACT_APP_ELEVENLABS_API_KEY;
 
@@ -112,48 +130,6 @@ const StoryPage = () => {
     return <LoginPage />;
   }
 
-  if (!selectedComic) {
-    return (
-      <div className={styles.body}>
-        <div className={styles.dotsOverlay}></div>
-        <header className={styles.header}>
-          <h1 className={styles.title}>Spider-Verse Interactive Story</h1>
-          <p className={styles.subtitle}>🕸️ Powered by 3 AI Agents: Script, Art, & Voice. 🕸️</p>
-          <p className={styles.welcome}>
-            Welcome, <span className={styles.userName}>{user?.name || user?.nickname || user?.email || 'Guest'}</span>
-          </p>
-          <button
-            onClick={handleLogout}
-            className={styles.logoutButton}
-            onMouseOver={(e) => (e.target.style.transform = 'translate(-2px, -2px)')}
-            onMouseOut={(e) => (e.target.style.transform = 'translate(0, 0)')}
-          >
-            Logout Now
-          </button>
-        </header>
-
-        <section className={styles.comicSelection}>
-          {[1, 2, 3].map((comicId) => (
-            <div
-              key={comicId}
-              className={styles.comicCard}
-              onClick={() => handleComicClick(comicId)}
-              onMouseOver={(e) => (e.target.style.transform = 'scale(1.05)')}
-              onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
-            >
-              <img
-                src={Cover}
-                alt={`Comic ${comicId}`}
-                className={styles.comicImage}
-              />
-              <p className={styles.comicTitle}>Comic {comicId}</p>
-            </div>
-          ))}
-        </section>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.body}>
       <div className={styles.dotsOverlay}></div>
@@ -163,22 +139,29 @@ const StoryPage = () => {
         <p className={styles.welcome}>
           Welcome, <span className={styles.userName}>{user?.name || user?.nickname || user?.email || 'Guest'}</span>
         </p>
-        <button
+        {/* <button
           onClick={handleLogout}
           className={styles.logoutButton}
           onMouseOver={(e) => (e.target.style.transform = 'translate(-2px, -2px)')}
           onMouseOut={(e) => (e.target.style.transform = 'translate(0, 0)')}
         >
           Logout Now
-        </button>
+        </button> */}
       </header>
 
       <section className={styles.pageSection}>
-        <h2 className={styles.pageTitle}>Comic Page {currentPage + 1}</h2>
+        <h2 className={styles.pageTitle}>Comic Page {storyData.page}</h2>
         <div className={styles.page}>
-          <div className={styles.panel}>Panel Placeholder (from agentic API)</div>
-          <p className={styles.dialogue}>Dialogue: "Hero says..." (from agentic API)</p>
-          <button
+          <div className={styles.panel}>
+            <img
+              src={storyData.image}
+              alt={`Panel ${storyData.page}`}
+              className={styles.comicImage}
+              onError={(e) => console.log('Image load error:', e)}
+            />
+          </div>
+          <p className={styles.storyText}>{storyData.story}</p>
+          {/* <button
             onClick={handlePlay}
             disabled={isPlaying}
             className={`${styles.playButton} ${isPlaying ? styles.disabled : ''}`}
@@ -190,24 +173,19 @@ const StoryPage = () => {
             }}
           >
             {isPlaying ? 'Playing...' : 'Play Narration'}
-          </button>
+          </button> */}
           <div className={styles.optionsContainer}>
-            <button
-              onClick={handleOptionClick}
-              className={styles.optionButton}
-              onMouseOver={(e) => (e.target.style.background = '#ff006e')}
-              onMouseOut={(e) => (e.target.style.background = '#8338ec')}
-            >
-              Option 1
-            </button>
-            <button
-              onClick={handleOptionClick}
-              className={styles.optionButton}
-              onMouseOver={(e) => (e.target.style.background = '#ff006e')}
-              onMouseOut={(e) => (e.target.style.background = '#8338ec')}
-            >
-              Option 2
-            </button>
+            {storyData.choices.map((choice) => (
+              <button
+                key={choice.id}
+                onClick={() => handleOptionClick(choice.id, choice.label)}
+                className={styles.optionButton}
+                onMouseOver={(e) => (e.target.style.background = '#ff006e')}
+                onMouseOut={(e) => (e.target.style.background = '#8338ec')}
+              >
+                {choice.label}
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -217,14 +195,27 @@ const StoryPage = () => {
         <button
           className={styles.restartButton}
           onClick={() => {
-            setSelectedComic(null);
-            setCurrentPage(0);
+            setCurrentPage(1);
             if (Math.random() > 0.3) createPowEffect(window.innerWidth / 2, window.innerHeight / 2); // 70% chance
           }}
         >
-          Choose Another Comic
+          Restart Story
         </button>
       </aside>
+      <aside className={styles.aside_left}>
+        <h4 className={styles.asideTitle}>System Alert</h4>
+        <button
+          onClick={handleLogout}
+          className={styles.logoutButton}
+          onMouseOver={(e) => (e.target.style.transform = 'translate(-2px, -2px)')}
+          onMouseOut={(e) => (e.target.style.transform = 'translate(0, 0)')}
+        >
+          Logout Now
+        </button>
+      </aside>
+      
+
+
     </div>
   );
 };

@@ -28,7 +28,7 @@ const LoginPage = () => {
         boxShadow: '0 0 25px rgba(255, 0, 110, 0.6)',
       }}>
         <h1 style={{ fontSize: '3em', marginBottom: '15px', textShadow: '3px 3px 5px #ff006e' }}>
-          Spider-Verse Login
+          WebVerse Login
         </h1>
         <p style={{ fontSize: '1.3em', marginBottom: '30px', opacity: 0.9 }}>
           Swing into your interactive comic adventure!
