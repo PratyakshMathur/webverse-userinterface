@@ -1,244 +1,60 @@
-/* StoryPage.module.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Comic+Neue:wght@400;700&display=swap');
 
-body {
+/* Base Styles - DARK MODE BY DEFAULT */
+.body {
   font-family: 'Bangers', cursive;
+  min-height: 100vh;
+  padding: 0.5rem 1rem 150px 1rem;
+  position: relative;
+  overflow-x: hidden;
   background: linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
               linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000);
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
-  background-color: #1a1a1a;
-  min-height: 100vh;
-  overflow-x: hidden;
+  background-color: #0a0a0a;
+  color: #fff;
 }
 
+/* Dots Overlay - More Visible */
 .dotsOverlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-  background-size: 4px 4px;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1.5px, transparent 1.5px);
+  background-size: 6px 6px;
   pointer-events: none;
   z-index: 1;
 }
 
+/* Remove Dark Mode Toggle */
+.darkModeToggle {
+  display: none;
+}
+
+/* Header */
 .header {
   text-align: center;
-  margin-bottom: 40px;
-  padding: 10px;
-  border: 2px dashed #ff006e;
-  background: linear-gradient(135deg, #ff0066, #6600ff);
-  box-shadow: 8px 8px 0 #000, inset 0 0 0 3px #fff;
-  animation: slideIn 0.8s ease-out;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .title {
-  font-size: 4.5rem;
-  color: #fff;
-  text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #00ffff, -2px -2px 0 #ffff00;
-  letter-spacing: 10px;
+  font-size: 5rem;
+  letter-spacing: 15px;
+  margin-bottom: 0.3rem;
   animation: glitch 3s infinite;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  font-size: 1.4rem;
-  color: #ffff00;
-  text-shadow: 2px 2px 0 #000;
-  margin-bottom: 1.5rem;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.welcome {
-  font-size: 1.1em;
-}
-
-.userName {
-  font-weight: bold;
-  color: #e6d6dd;
-}
-
-/* .logoutButton {
-  padding: 1rem;
-  font-family: 'Bangers', cursive;
-  font-size: 1.4rem;
-  background: linear-gradient(135deg, #ff0066, #ffff00);
-  color: #000;
-  border: 4px solid #000;
-  cursor: pointer;
-  box-shadow: 4px 4px 0 #000;
-  transition: all 0.3s;
-  letter-spacing: 2px;
-  margin-top: 1rem;
-} */
-
-.logoutButton:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 #000;
-  background: linear-gradient(135deg, #ffff00, #ff0066);
-}
-
-.pageSection {
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.pageTitle {
-  color: #004e92;
-  font-size: 1.8em;
-  margin-bottom: 20px;
-}
-
-.page {
-  background: linear-gradient(135deg, #ff0066, #6600ff);
-  border: 6px solid #000;
-  box-shadow: 8px 8px 0 #000, inset 0 0 0 3px #fff;
-  padding: 2rem;
-  max-width: 700px;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  animation: slideIn 0.8s ease-out;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.panel {
-  width: 90%;
-  height: 700px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 10%);
-  border: 4px solid #000;
-  margin: 0px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: #fff;
-  font-size: 1.1rem;
-  text-align: center;
-  padding: 1rem;
-  position: relative;
-  overflow: hidden;
+  text-shadow: 
+    4px 4px 0 #ff0000,
+    8px 8px 0 #00ffff,
+    -3px -3px 0 #ffff00,
+    12px 12px 20px rgba(255, 0, 102, 0.8),
+    -6px -6px 20px rgba(0, 255, 255, 0.6);
 }
 
-.dialogue {
-  font-family: 'Permanent Marker', cursive;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin: 1rem 0;
-}
-
-.playButton {
-  background: #ff006e;
-  color: #fff;
-  border: none;
-  padding: 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 20px 0;
-  font-family: 'Bangers', cursive;
-  font-size: 2rem;
-  border: 5px solid #000;
-  box-shadow: 6px 6px 0 #000;
-  transition: all 0.2s;
-  letter-spacing: 3px;
-}
-
-.playButton:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.playButton:hover:not(:disabled) {
-  transform: translate(-3px, -3px);
-  box-shadow: 9px 9px 0 #000;
-  background: #ffff00;
-  color: #000;
-}
-
-.playButton.playing {
-  background: #ff0066;
-  color: #fff;
-}
-
-.optionsContainer {
-  margin-top: 20px;
-}
-
-.optionButton {
-  background: #8338ec;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 0 10px;
-  font-family: 'Bangers', cursive;
-  font-size: 1.3rem;
-  border: 4px solid #000;
-  box-shadow: 4px 4px 0 #000;
-  transition: all 0.2s;
-}
-
-.optionButton:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 #000;
-  background: #ff006e;
-}
-
-.aside {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #ff006e;
-  color: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  font-size: 1em;
-}
-.aside_left {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: #ff006e;
-    color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    font-size: 1em;
-  }
-
-.asideTitle {
-  margin: 0 0 10px;
-}
-
-.restartButton {
-  background: none;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1em;
-  text-decoration: underline;
-}
-
-.loading {
-  text-align: center;
-  padding: 50px;
-  font-family: 'Bangers', cursive;
-  color: #ffff00;
-  text-shadow: 2px 2px 0 #000;
-  animation: pulse 1s infinite;
-}
-
-/* Animations */
 @keyframes glitch {
   0%, 90%, 100% { transform: translate(0); }
   92% { transform: translate(-2px, 2px); }
@@ -246,14 +62,357 @@ body {
   96% { transform: translate(-2px, -2px); }
 }
 
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  animation: pulse 2s ease-in-out infinite;
+  color: #ffff00;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.welcome {
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.userName {
+  color: #00ffff;
+  font-weight: bold;
+}
+
+/* Logout Button */
+.logoutBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 0.8rem 1.5rem;
+  font-family: 'Bangers', cursive;
+  font-size: 1.2rem;
+  background: #ff0066;
+  color: #fff;
+  border: 4px solid #000;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+  z-index: 9999;
+  border-radius: 5px;
+}
+
+.logoutBtn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+  background: #ffff00;
+  color: #000;
+}
+
+.logoutBtn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* Remove old logout styles */
+.header .logoutButton {
+  display: none;
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.8; transform: scale(1.05); }
 }
 
+/* Page Section */
+.pageSection {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.pageTitle {
+  display: none;
+}
+
+.page {
+  background: linear-gradient(135deg, #ff0066, #6600ff);
+  border: 8px solid #000;
+  box-shadow: 12px 12px 0 #000;
+  padding: 1.5rem;
+  animation: slideIn 0.8s ease-out;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(45deg, #ffff00, #00ffff);
+  z-index: -1;
+  border-radius: 2px;
+}
+
 @keyframes slideIn {
-  from { transform: translateY(100px) rotate(-5deg); opacity: 0; }
-  to { transform: translateY(0) rotate(0deg); opacity: 1; }
+  from {
+    transform: translateY(100px) rotate(-5deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Panel Container */
+.panelContainer {
+  margin-bottom: 2rem;
+}
+
+.panel {
+  position: relative;
+  background: #fff;
+  border: 6px solid #000;
+  box-shadow: 8px 8px 0 #000;
+  overflow: hidden;
+  animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(45deg, #ff0066, #6600ff, #00ffff, #ffff00);
+  z-index: -1;
+}
+
+.panelNumber {
+  display: none;
+}
+
+.comicImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* Story Text Container */
+.storyTextContainer {
+  background: rgba(0,0,0,0.3);
+  border: 3px solid #ffff00;
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+  border-radius: 10px;
+}
+
+.storyText {
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.4rem !important;
+  line-height: 1.5 !important;
+  color: #fff !important;
+  margin-bottom: 1.2rem !important;
+  text-align: left !important;
+  font-style: italic !important;
+  letter-spacing: 2px !important;
+  font-weight: 400 !important;
+}
+
+/* Narrate Button */
+.narrateButton {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  font-family: 'Bangers', cursive;
+  font-size: 1.3rem;
+  background: #00ffff;
+  color: #000;
+  border: 4px solid #000;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  transition: all 0.2s;
+  letter-spacing: 2px;
+  margin-top: 0.8rem;
+}
+
+.narrateButton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+  background: #ffff00;
+}
+
+.narrateButton.playing {
+  background: #ff0066;
+  color: #fff;
+  animation: pulse 1s infinite;
+}
+
+.narrateButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* What will you do prompt */
+.choicesPrompt {
+  font-family: 'Bangers', cursive;
+  font-size: 2.5rem;
+  color: #ffff00;
+  text-shadow: 3px 3px 0 #000;
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  letter-spacing: 3px;
+}
+
+/* Choices Section */
+.choicesTitle {
+  display: none;
+}
+
+.optionsContainer {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+  z-index: 1000;
+  width: auto;
+}
+
+.optionButton {
+  padding: 1.5rem 2.5rem;
+  font-family: 'Bangers', cursive;
+  font-size: 1.6rem;
+  background: #ffff00;
+  color: #000;
+  border: 6px solid #000;
+  cursor: pointer;
+  box-shadow: 8px 8px 0 #000;
+  transition: all 0.3s;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  animation: floatButton 3s ease-in-out infinite;
+  animation-fill-mode: both;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 250px;
+  border-radius: 10px;
+}
+
+@keyframes floatButton {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.optionButton:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 12px 12px 0 #000;
+  background: #ff0066;
+  color: #fff;
+  scale: 1.05;
+}
+
+.optionButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 #000;
+}
+
+.choiceIcon {
+  font-size: 2rem;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Remove Side Panels */
+.asideLeft, .asideRight {
+  display: none;
+}
+
+.asideTitle {
+  display: none;
+}
+
+.logoutButton {
+  display: none;
+}
+
+/* Restart Button - Fixed Position on Right - FORCED VISIBLE */
+.restartButton {
+  position: fixed !important;
+  top: 50% !important;
+  right: 30px !important;
+  transform: translateY(-50%) !important;
+  padding: 1.2rem 1.8rem !important;
+  font-family: 'Bangers', cursive !important;
+  font-size: 1.5rem !important;
+  background: #ffff00 !important;
+  color: #000 !important;
+  border: 6px solid #000 !important;
+  cursor: pointer !important;
+  box-shadow: 8px 8px 0 #000 !important;
+  transition: all 0.2s !important;
+  letter-spacing: 2px !important;
+  z-index: 9999 !important;
+  border-radius: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  writing-mode: horizontal-tb !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.restartButton:hover {
+  transform: translateY(-50%) translate(-3px, -3px) !important;
+  box-shadow: 11px 11px 0 #000 !important;
+  background: #00ffff !important;
+}
+
+.restartButton:active {
+  transform: translateY(-50%) translate(2px, 2px) !important;
+  box-shadow: 3px 3px 0 #000 !important;
+}
+
+/* POW Effect */
+.powEffect {
+  position: fixed;
+  font-size: 8rem;
+  color: #ffff00;
+  text-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0066;
+  animation: pow 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 1000;
 }
 
 @keyframes pow {
@@ -271,54 +430,53 @@ body {
   }
 }
 
-.powEffect {
-  position: fixed;
-  font-size: 8rem;
+/* Loading */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 3rem;
   color: #ffff00;
-  text-shadow: 4px 4px 0 #000, 8px 8px 0 #ff0066;
-  animation: pow 1s ease-out forwards;
-  pointer-events: none;
-  z-index: 1000;
+  text-shadow: 3px 3px 0 #000;
+  animation: pulse 1s infinite;
 }
 
-/* New style for prompt input */
-.promptInput {
-  font-family: 'Bangers', cursive;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  margin: 1rem 0;
-  border: 3px solid #000;
-  border-radius: 5px;
-  background: #fff;
-  width: 80%;
-  max-width: 400px;
-  box-shadow: 4px 4px 0 #000;
-  transition: all 0.2s;
-}
-
-.promptInput:focus {
-  outline: none;
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 #000;
-  background: #ffff00;
-  color: #000;
-}
-
-/* Existing styles remain unchanged, add this new class */
-.storyText {
-    font-family: 'Permanent Marker', cursive;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin: 1rem 0;
-    color: #fff;
-    text-shadow: 2px 2px 0 #000;
+/* Responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem;
+    letter-spacing: 6px;
   }
   
-  /* Ensure comicImage is defined if not already */
-  .comicImage {
-    width: 100%;
-    height: 700px;
-    max-height: 100%;
-    object-fit: contain;
-    /* border: 4px solid #000; */
+  .subtitle {
+    font-size: 1.2rem;
   }
+  
+  .pageTitle {
+    font-size: 2rem;
+  }
+  
+  .optionsContainer {
+    flex-direction: column;
+    bottom: 20px;
+    gap: 1rem;
+  }
+  
+  .optionButton {
+    font-size: 1.4rem;
+    padding: 1.2rem 1.5rem;
+    min-width: 200px;
+  }
+  
+  .logoutBtn {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+  
+  .restartButton {
+    right: 10px !important;
+    font-size: 1.2rem !important;
+    padding: 1rem 1.3rem !important;
+  }
+}
