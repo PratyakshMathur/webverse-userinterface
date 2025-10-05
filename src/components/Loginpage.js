@@ -47,7 +47,7 @@ const LoginPage = ({ notice }) => {
           onClick={() => loginWithRedirect({ redirectUri: window.location.origin })}
           style={{
             background: 'linear-gradient(45deg, #ff006e, #8338ec)',
-            color: '#fff',
+            color: '#111111ff',
             border: 'none',
             padding: '15px 40px',
             fontSize: '1.2em',

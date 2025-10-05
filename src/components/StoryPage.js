@@ -11,7 +11,7 @@ const StoryPage = () => {
   const [isPlaying, setIsPlaying] = useState(false); 
   const [storyData, setStoryData] = useState({
     page: 0,
-    story: 'Loading the WEBVERSE...', // Initial loading message
+    story: 'Into the Web-verse...', // Initial loading message
     dialogues: [],
     choices: [],
     history: [],
@@ -146,9 +146,9 @@ const StoryPage = () => {
     setIsPlaying(true);
     try {
       const narrationText = storyData.story;
-      const voiceId = "21m00Tcm4TlvDq8ikWAM";
-      const apiKey = process.env.REACT_APP_ELEVENLABS_API_KEY;
-
+      const voiceId = "st6IIEnC7Mr6hZ6bgdFE";
+      const apiKey = "838165e2654580d5d724287dc39c0fd5a5d31322c632d6fc418859777067024a"; // REPLACE with your actual ElevenLabs API key or use environment variable
+      // const apiKey = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY;
       if (!apiKey) {
         console.error('ElevenLabs API key not found. Add REACT_APP_ELEVENLABS_API_KEY to .env');
         setIsPlaying(false);
@@ -158,17 +158,18 @@ const StoryPage = () => {
       const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
         method: 'POST',
         headers: {
+          'Accept': 'audio/mpeg',
           'xi-api-key': apiKey,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           text: narrationText,
-          model_id: 'eleven_multilingual_v2',
+          model_id: 'eleven_multilingual_v1',
           voice_settings: {
             stability: 0.7,
             similarity_boost: 0.6,
-          },
-          output_format: 'mp3_44100_128',
+          }
+          // output_format: 'mp3_44100_128',
         }),
       });
 
@@ -292,19 +293,19 @@ const StoryPage = () => {
 
           <div className={styles.storyTextContainer}>
             <p className={styles.storyText}>{storyData.story}</p>
+          </div>
             
+          <div className={styles.optionsContainer}>
             <button
-              onClick={handlePlay}
-              disabled={isPlaying}
-              className={`${styles.narrateButton} ${isPlaying ? styles.playing : ''}`}
+              className={styles.restartButton}
+              onClick={() => {
+                setCurrentPage(1);
+                if (Math.random() > 0.3) createPowEffect(window.innerWidth / 2, window.innerHeight / 2);
+              }}
             >
-              {isPlaying ? '⏸️ PLAYING...' : '▶️ NARRATE'}
+              <img src="/repeat.svg" alt="Restart" className={styles.restartIcon} />
             </button>
 
-            <h3 className={styles.choicesPrompt}>What will you do?</h3>
-          </div>
-
-          <div className={styles.optionsContainer}>
             {storyData.choices.map((choice, index) => (
               <button
                 key={choice.id}
@@ -312,24 +313,22 @@ const StoryPage = () => {
                 className={styles.optionButton}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <span className={styles.choiceIcon}>⚡</span>
+                <img src="/web.svg" alt="Web" className={styles.choiceIcon} />
                 {choice.label}
               </button>
             ))}
+
+            <button
+              onClick={handlePlay}
+              disabled={isPlaying}
+              className={`${styles.narrateButton} ${isPlaying ? styles.playing : ''}`}
+            >
+              <img src="/narrate.svg" alt="Narrate" className={styles.restartIcon} />
+            </button>
           </div>
         </div>
       </section>
 
-      <button
-        className={styles.restartButton}
-        onClick={() => {
-          setCurrentPage(1);
-          fetchInitialStory(); // 🚨 Call API function to restart story
-          if (Math.random() > 0.3) createPowEffect(window.innerWidth / 2, window.innerHeight / 2);
-        }}
-      >
-        🔄 RESTART
-      </button>
     </div>
   );
 };
