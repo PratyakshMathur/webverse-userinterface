@@ -45,7 +45,7 @@ To do this, first copy `src/auth_config.json.example` into a new file in the sam
 
 ### Compile and hot-reload for development
 
-This compiles and serves the React app and starts the backend API server on port 3001.
+This compiles and serves the React app and starts the backend API server on port 3000.
 
 ```bash
 npm start
