@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'; // 🚨 Added useCallback
+import React, { useState, useEffect, useCallback, useMemo } from 'react'; // 🚨 Added useCallback
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginPage from './Loginpage';
 // import testData from './test.json'; // 🚨 REMOVED: Using live API data
@@ -15,11 +15,12 @@ const StoryPage = () => {
     dialogues: [],
     choices: [],
     history: [],
-    image: null // Start with null
+    image: null
   });
-  const [isStoryLoading, setIsStoryLoading] = useState(true); // 🚨 NEW: Loading state for API
+  const [isStoryLoading, setIsStoryLoading] = useState(false); // 🚨 NEW: Loading state for API
+  const [authTimeoutReached, setAuthTimeoutReached] = useState(false);
   
-  const soundEffects = ['POW!', 'BAM!', 'WHAM!', 'THWIP!', 'BOOM!', 'ZAP!'];
+  const soundEffects = useMemo(() => ['POW!', 'BAM!', 'WHAM!', 'THWIP!', 'BOOM!', 'ZAP!'], []);
 
   // 🚨 API Endpoint
   const STORY_API_ENDPOINT = "https://dev-a6a5q6irm.agentuity.run/0869fb10adad5aa7841eb834eccfda58";
@@ -198,6 +199,8 @@ const StoryPage = () => {
     // It calls the API ONLY when the user is authenticated.
     if (isAuthenticated) {
       fetchInitialStory(); 
+    } else {
+      setIsStoryLoading(false);
     }
     
     const handleDocumentClick = (e) => {
@@ -213,12 +216,43 @@ const StoryPage = () => {
   }, [isAuthenticated, createPowEffect, fetchInitialStory]); // Dependencies for useEffect
 
 
-  if (isLoading || isStoryLoading) {
+  useEffect(() => {
+    let timeoutId;
+    if (isLoading) {
+      timeoutId = setTimeout(() => setAuthTimeoutReached(true), 6000);
+    } else {
+      setAuthTimeoutReached(false);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (authTimeoutReached) {
+      setStoryData((prev) => {
+        if (prev.page !== 0 || prev.history.length > 0) {
+          return prev;
+        }
+        return {
+          ...prev,
+          story: 'Auth0 is waking up the login gateway...'
+        };
+      });
+    }
+  }, [authTimeoutReached]);
+
+  if (isLoading && !authTimeoutReached) {
     return <div className={styles.loading}>{storyData.story}</div>;
   }
 
   if (!isAuthenticated) {
-    return <LoginPage />;
+    return <LoginPage notice={authTimeoutReached ? 'Auth0 is taking longer than usual. Tap the button to launch the login portal.' : undefined} />;
+  }
+
+  if (isStoryLoading) {
+    return <div className={styles.loading}>{storyData.story}</div>;
   }
 
   return (

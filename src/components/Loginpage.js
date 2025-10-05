@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const LoginPage = () => {
+const LoginPage = ({ notice }) => {
   const { loginWithRedirect } = useAuth0();
 
   return (
@@ -27,6 +27,16 @@ const LoginPage = () => {
         border: '3px solid #ff006e',
         boxShadow: '0 0 25px rgba(255, 0, 110, 0.6)',
       }}>
+        {notice && (
+          <div style={{
+            fontSize: '1.1em',
+            marginBottom: '20px',
+            color: '#ffec99',
+            textShadow: '2px 2px 0 #ff006e'
+          }}>
+            {notice}
+          </div>
+        )}
         <h1 style={{ fontSize: '3em', marginBottom: '15px', textShadow: '3px 3px 5px #ff006e' }}>
           WebVerse Login
         </h1>
