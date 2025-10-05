@@ -12,10 +12,10 @@ This sample demonstrates the following use cases:
 
 ## Project setup
 
-Use `yarn` to install the project dependencies:
+Use `npm` to install the project dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 ## Configuration
@@ -35,10 +35,7 @@ To do this, first copy `src/auth_config.json.example` into a new file in the sam
 ```json
 {
   "domain": "{YOUR AUTH0 DOMAIN}",
-  "clientId": "{YOUR AUTH0 CLIENT ID}",
-  "audience": "{YOUR AUTH0 API_IDENTIFIER}",
-  "appOrigin": "{OPTIONAL: THE BASE URL OF YOUR APPLICATION (default: http://localhost:3000)}",
-  "apiOrigin": "{OPTIONAL: THE BASE URL OF YOUR API (default: http://localhost:3001)}"
+  "clientId": "{YOUR AUTH0 CLIENT ID}"
 }
 ```
 
@@ -51,25 +48,16 @@ To do this, first copy `src/auth_config.json.example` into a new file in the sam
 This compiles and serves the React app and starts the backend API server on port 3001.
 
 ```bash
-yarn run dev
+npm start
 ```
 
 ## Deployment
 
-### Compiles and minifies for production
-
-```bash
-yarn run build
-```
-
-### Docker build
-
-To build and run the Docker image, run `exec.sh`, or `exec.ps1` on Windows.
 
 ### Run your tests
 
 ```bash
-yarn run test
+npm test
 ```
 
 ## Frequently Asked Questions
