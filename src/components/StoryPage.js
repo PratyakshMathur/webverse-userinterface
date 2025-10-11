@@ -23,7 +23,7 @@ const StoryPage = () => {
   const soundEffects = useMemo(() => ['POW!', 'BAM!', 'WHAM!', 'THWIP!', 'BOOM!', 'ZAP!'], []);
 
   // 🚨 API Endpoint
-  const STORY_API_ENDPOINT = "https://dev-a6a5q6irm.agentuity.run/0869fb10adad5aa7841eb834eccfda58";
+  const STORY_API_ENDPOINT = "https://dev-9oiuxjoo4.agentuity.run/0869fb10adad5aa7841eb834eccfda58";
 
   // Utility functions wrapped in useCallback for performance
   
